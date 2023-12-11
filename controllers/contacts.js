@@ -2,8 +2,6 @@ const contacts = require("../models/contacts");
 
 const { HttpError, ctrlWrapper } = require("../helpers");
 
-// const { ctrlWrapper } = require("../helpers");
-
 const listContacts = async (_, res) => {
   const result = await contacts.listContacts();
   res.json(result);
@@ -19,10 +17,6 @@ const getContactById = async (req, res) => {
 };
 
 const addContact = async (req, res) => {
-  //   const { error } = addSchema.validate(req.body);
-  //   if (error) {
-  //     throw HttpError(400, error.message);
-  //   }
   const result = await contacts.addContact(req.body);
   res.status(201).json(result);
 };
@@ -33,14 +27,12 @@ const removeContact = async (req, res) => {
   if (!result) {
     throw HttpError(404, "Not found");
   }
-  res.status(200).json(result);
+  res.json({
+    message: "contact deleted",
+  });
 };
 
 const updateContact = async (req, res) => {
-  //   const { error } = addSchema.validate(req.body);
-  //   if (error) {
-  //     throw HttpError(400, error.message);
-  //   }
   const { id } = req.params;
   const result = await contacts.updateContact(id, req.body);
   if (!result) {
