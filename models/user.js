@@ -6,6 +6,7 @@ const { handleMongooseError } = require("../helpers");
 const userSchema = new Schema({
   password: {
     type: String,
+    minLength: 6,
     required: [true, "Set password for user"],
   },
   email: {
@@ -18,7 +19,14 @@ const userSchema = new Schema({
     enum: ["starter", "pro", "business"],
     default: "starter",
   },
-  token: String,
+  token: {
+    type: String,
+    default: "",
+  },
+  avatarURL: {
+    type: String,
+    required: true,
+  },
 });
 
 userSchema.post("save", handleMongooseError);
